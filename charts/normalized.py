@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 
-def normalized_chart(data, start_date="2021-01-01"):
+def normalized_chart(data, period="5y"):
     """
     Receives a dictionary {name: pandas Series} and returns
     a Plotly figure with all assets normalized to 100 at start_date.
@@ -21,7 +21,7 @@ def normalized_chart(data, start_date="2021-01-01"):
         ))
 
     fig.update_layout(
-        title=f"Gold vs Silver vs S&P 500 — % change since {start_date}",
+        title=f"Commodity Dashboard — {period} performance (indexed to 100)",
         yaxis_title="Indexed to 100",
         xaxis_title="Date",
         hovermode="x unified",

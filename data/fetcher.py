@@ -1,20 +1,36 @@
 import yfinance as yf
 
-# Human-readable name → Yahoo Finance ticker
+# ETFs mapped to their commodity — physical or futures-based ETFs only
+# (no mining company ETFs, as they track equities not commodity prices)
 TICKERS = {
+    # Precious metals futures
     "Gold": "GC=F",
     "Silver": "SI=F",
+    "Platinum": "PL=F",
+    #"Palladium": "PA=F",
+    # Industrial metals futures
+    "Copper": "HG=F",
+    # Energy futures-based ETFs
+    "Oil (WTI)": "CL=F",
+    "Natural Gas": "NG=F",
+    # Equities index — for comparison
     "S&P 500": "^GSPC",
 }
 
-def fetch_data(start_date="2021-01-01"):
+VALID_PERIODS = ["1y", "2y", "5y", "10y", "max"]
+
+def fetch_data(period="5y"):
     """
-    Downloads closing prices for each asset in TICKERS from start_date to today.
+    Downloads closing prices for all assets for the given period.
+    Period must be one of: 1y, 2y, 5y, 10y, max.
     Returns a dictionary {name: pandas Series}.
     """
+    if period not in VALID_PERIODS:
+        raise ValueError(f"Invalid period '{period}'. Must be one of {VALID_PERIODS}")
+
     data = {}
     for name, ticker in TICKERS.items():
-        df = yf.Ticker(ticker).history(start=start_date)["Close"]
-        df = df.dropna()
-        data[name] = df
+        df = yf.Ticker(ticker).history(period=period)["Close"]
+        data[name] = df.dropna()
+
     return data

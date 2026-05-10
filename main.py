@@ -2,12 +2,12 @@ from data.fetcher import fetch_data
 from charts.normalized import normalized_chart
 
 # --- Configuration ---
-START_DATE = "2021-01-01"
+PERIOD = "5y"
 OUTPUT_PATH = "docs/normalized.html"
 
 # --- Run ---
-data = fetch_data(start_date=START_DATE)
-fig = normalized_chart(data, start_date=START_DATE)
+data = fetch_data(period=PERIOD)
+fig = normalized_chart(data, period=PERIOD)
 fig.write_html(OUTPUT_PATH)
 
 print(f"Chart saved to {OUTPUT_PATH}")
