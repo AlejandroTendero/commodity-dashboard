@@ -36,11 +36,10 @@ def fetch_data(period="5y"):
 
 def fetch_all_periods():
     """
-    Downloads data for all valid periods.
-    Returns a dict {period: {name: Series}} ready for normalized_chart().
+    Downloads closing prices for all assets across all available periods.
+    Returns a dictionary {period: {name: pandas Series}}.
     """
-    # Why a separate function instead of doing this in main.py:
-    # fetcher.py already knows TICKERS and VALID_PERIODS.
-    # Duplicating that logic in main.py would mean two places to update
-    # when you add a ticker or a period — a classic source of bugs.
-    return {period: fetch_data(period) for period in VALID_PERIODS}
+    all_data = {}
+    for period in VALID_PERIODS:
+        all_data[period] = fetch_data(period=period)
+    return all_data
