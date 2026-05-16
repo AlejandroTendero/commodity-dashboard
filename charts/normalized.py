@@ -6,6 +6,7 @@ PERIOD_LABELS = {
     "1y": "1 Year",
     "2y": "2 Years",
     "5y": "5 Years",
+    "10y": "10 Years"
 }
 
 def normalized_chart(all_data, default_period="5y"):
@@ -54,21 +55,30 @@ def normalized_chart(all_data, default_period="5y"):
             method="update",
             args=[
                 {"visible": visibility},
-                {"title": f"Commodity Dashboard — {PERIOD_LABELS[period]} performance (indexed to 100)"},
+                {"title.text": f"Commodity Dashboard — {PERIOD_LABELS[period]} performance (indexed to 100)"},
             ],
         ))
 
     fig.update_layout(
-        title=f"Commodity Dashboard — {PERIOD_LABELS[periods[default_index]]} performance (indexed to 100)",
+        title=dict(
+            text=f"Commodity Dashboard — {PERIOD_LABELS[periods[default_index]]} performance (indexed to 100)",
+            y=0.98,
+            x=0.5,
+            xanchor="center",
+            yanchor="top",
+        ),
         yaxis_title="Indexed to 100",
         xaxis_title="Date",
         hovermode="x unified",
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        margin=dict(t=60, b=60),
+        legend=dict(orientation="v", x=1.02, y=1),
         updatemenus=[dict(
             type="buttons",
-            direction="right",
-            x=0.0,
-            y=1.15,
+            direction="down",
+            x=1.02,
+            xanchor="left",
+            y=0.5,
+            yanchor="middle",
             buttons=buttons,
         )],
     )
