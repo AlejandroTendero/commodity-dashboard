@@ -100,12 +100,12 @@ def normalized_chart(all_data, default_period="5y"):
             "#607D8B",  # 8th asset
         ],
         updatemenus=[dict(
-            type="buttons",
-            direction="down",
+            type="dropdown",
             x=1.02,
             xanchor="left",
             y=0.5,
             yanchor="middle",
+            active=periods.index(default_period),
             buttons=buttons,
         )],
     )
