@@ -1,13 +1,7 @@
-from data.fetcher import fetch_data
+from data.fetcher import fetch_all_periods
 from charts.normalized import normalized_chart
 
-# --- Configuration ---
-PERIOD = "5y"
-OUTPUT_PATH = "docs/normalized.html"
+data_by_period = fetch_all_periods()
 
-# --- Run ---
-data = fetch_data(period=PERIOD)
-fig = normalized_chart(data, period=PERIOD)
-fig.write_html(OUTPUT_PATH)
-
-print(f"Chart saved to {OUTPUT_PATH}")
+fig = normalized_chart(data_by_period, default_period="5y")
+fig.write_html("docs/normalized.html")

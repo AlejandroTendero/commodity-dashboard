@@ -17,7 +17,7 @@ TICKERS = {
     "S&P 500": "^GSPC",
 }
 
-VALID_PERIODS = ["1y", "2y", "5y", "10y", "max"]
+VALID_PERIODS = ["1mo", "6mo", "1y", "2y", "5y"]
 
 def fetch_data(period="5y"):
     """
@@ -32,5 +32,15 @@ def fetch_data(period="5y"):
     for name, ticker in TICKERS.items():
         df = yf.Ticker(ticker).history(period=period)["Close"]
         data[name] = df.dropna()
-
     return data
+
+def fetch_all_periods():
+    """
+    Downloads data for all valid periods.
+    Returns a dict {period: {name: Series}} ready for normalized_chart().
+    """
+    # Why a separate function instead of doing this in main.py:
+    # fetcher.py already knows TICKERS and VALID_PERIODS.
+    # Duplicating that logic in main.py would mean two places to update
+    # when you add a ticker or a period — a classic source of bugs.
+    return {period: fetch_data(period) for period in VALID_PERIODS}
