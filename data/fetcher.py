@@ -6,7 +6,7 @@ TICKERS = {
     # Precious metals futures
     "Gold": "GC=F",
     "Silver": "SI=F",
-    "Platinum": "PL=F",
+    #"Platinum": "PL=F",
     #"Palladium": "PA=F",
     # Industrial metals futures
     "Copper": "HG=F",
@@ -17,7 +17,7 @@ TICKERS = {
     "S&P 500": "^GSPC",
 }
 
-VALID_PERIODS = ["1mo", "6mo", "1y", "2y", "5y"]
+VALID_PERIODS = ["1mo", "6mo", "1y", "2y", "5y", "10y"]
 
 def fetch_data(period="5y"):
     """

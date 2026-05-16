@@ -72,6 +72,33 @@ def normalized_chart(all_data, default_period="5y"):
         hovermode="x unified",
         margin=dict(t=60, b=60),
         legend=dict(orientation="v", x=1.02, y=1),
+        plot_bgcolor="white",
+        paper_bgcolor="white",
+        yaxis=dict(
+            gridcolor="#e8e8e8",
+            gridwidth=0.5,
+            zerolinecolor="#e8e8e8",
+            showline=True,
+            linecolor="#cccccc",
+            mirror=True,  # draws the line on both sides, creating a full border
+        ),
+        xaxis=dict(
+            gridcolor="#e8e8e8",
+            gridwidth=0.5,
+            showline=True,
+            linecolor="#cccccc",
+            mirror=True,
+        ),
+        colorway=[
+            "#2196F3",  # 1st asset
+            "#FF5722",  # 2nd asset
+            "#4CAF50",  # 3rd asset
+            "#9C27B0",  # 4th asset
+            "#00BCD4",  # 5th asset
+            "#F44336",  # 6th asset
+            "#FF9800",  # 7th asset
+            "#607D8B",  # 8th asset
+        ],
         updatemenus=[dict(
             type="buttons",
             direction="down",
