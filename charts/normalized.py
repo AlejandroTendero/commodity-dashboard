@@ -61,7 +61,7 @@ def normalized_chart(all_data, default_period="5y"):
 
     fig.update_layout(
         title=dict(
-            text=f"Commodity Dashboard — {PERIOD_LABELS[periods[default_index]]} performance (indexed to 100)",
+            text=f"Precious metals Dashboard — {PERIOD_LABELS[periods[default_index]]} performance (indexed to 100)",
             y=0.98,
             x=0.5,
             xanchor="center",
