@@ -8,12 +8,12 @@ TICKERS = {
     "Gold": "GC=F",
     "Silver": "SI=F",
     "Platinum": "PL=F",
-    #"Palladium": "PA=F",
+    "Palladium": "PA=F",
     # Industrial metals futures
-    #"Copper": "HG=F",
+    "Copper": "HG=F",
     # Energy futures-based ETFs
-    #"Oil (WTI)": "CL=F",
-    #"Natural Gas": "NG=F",
+    "Oil (WTI)": "CL=F",
+    "Natural Gas": "NG=F",
     # Equities index — for comparison
     "S&P 500": "^GSPC",
 }
