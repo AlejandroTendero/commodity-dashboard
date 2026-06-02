@@ -11,6 +11,8 @@ periodo = st.selectbox(
 
 data = fetch_data(periodo)
 
+
+
 fig = normalized_chart(data, period_label=PERIOD_LABELS[periodo])
 
 st.plotly_chart(fig, width='stretch', height=550)
