@@ -3,19 +3,23 @@ from data.fetcher import fetch_data, VALID_PERIODS
 from charts.normalized import normalized_chart, PERIOD_LABELS
 
 st.title("Commodity dashboard")
-periodo = st.selectbox(
-            "Select period",
-             options=VALID_PERIODS,
-             format_func=lambda p: PERIOD_LABELS[p]
-        )
 
-data = fetch_data(periodo)
+data = fetch_data("5y")  # para poblar el multiselect
 
-activos_seleccionados = st.multiselect(
-    "Select assets",
-    options=[a for a in data.keys() if a != "S&P 500"],
-    default=["Gold", "Silver"]
-)
+with st.sidebar:
+    st.header("Controls")
+    periodo = st.selectbox(
+        "Select period",
+        options=VALID_PERIODS,
+        format_func=lambda p: PERIOD_LABELS[p]
+    )
+    activos_seleccionados = st.multiselect(
+        "Select assets",
+        options=[a for a in data.keys() if a != "S&P 500"],
+        default=["Gold", "Silver"]
+    )
+
+data = fetch_data(periodo)  # recalcula con el periodo real
 
 # S&P 500 siempre incluido
 data_filtrada = {k: v for k, v in data.items() if k == "S&P 500" or k in activos_seleccionados}
