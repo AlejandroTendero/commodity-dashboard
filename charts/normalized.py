@@ -32,7 +32,7 @@ def normalized_chart(data, period_label=""):
 
     fig.update_layout(
         title=dict(
-            text=f"Commodity Dashboard — {period_label} performance (indexed to 100)",
+            text=f"{period_label} performance (indexed to 100)",
             y=0.92,
             x=0.5,
             xanchor="center",

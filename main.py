@@ -61,7 +61,11 @@ for p in VALID_PERIODS:
     rows.append(row)
 
 df_tabla = pd.DataFrame(rows).set_index("Period")
+
+ancho_columna = 120
+ancho_total = ancho_columna * (len(activos_seleccionados) + 1)  # +1 por S&P 500
+
 st.dataframe(
     df_tabla.style.map(color_rendimiento),
-    use_container_width=True
+    width=ancho_total
 )
