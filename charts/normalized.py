@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 PERIOD_LABELS = {
     "1mo": "1 Month",
     "6mo": "6 Months",
+    "ytd": "Year to Date",
     "1y": "1 Year",
     "2y": "2 Years",
     "5y": "5 Years",

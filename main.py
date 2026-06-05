@@ -12,7 +12,8 @@ with st.sidebar:
     periodo = st.selectbox(
         "Select period",
         options=VALID_PERIODS,
-        format_func=lambda p: PERIOD_LABELS[p]
+        format_func=lambda p: PERIOD_LABELS[p],
+        index=VALID_PERIODS.index("1y")
     )
     activos_seleccionados = st.multiselect(
         "Select assets",

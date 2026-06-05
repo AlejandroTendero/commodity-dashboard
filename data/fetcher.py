@@ -18,7 +18,7 @@ TICKERS = {
     "S&P 500": "^GSPC",
 }
 
-VALID_PERIODS = ["1mo", "6mo", "1y", "2y", "5y", "10y"]
+VALID_PERIODS = ["1mo", "6mo", "ytd", "1y", "2y", "5y", "10y"]
 
 @st.cache_data
 
