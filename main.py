@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from data.fetcher import fetch_data, VALID_PERIODS
 from charts.normalized import normalized_chart, PERIOD_LABELS
 
@@ -26,3 +27,21 @@ data_filtrada = {k: v for k, v in data.items() if k == "S&P 500" or k in activos
 fig = normalized_chart(data_filtrada, period_label=PERIOD_LABELS[periodo])
 
 st.plotly_chart(fig, width='stretch', height=550)
+
+st.subheader("Performance by period")
+
+# Construir la tabla
+rows = []
+for p in VALID_PERIODS:
+    data_p = fetch_data(p)
+    row = {"Period": PERIOD_LABELS[p]}
+    activos_tabla = activos_seleccionados + ["S&P 500"]
+    for activo in activos_tabla:
+        if activo in data_p:
+            series = data_p[activo]
+            rendimiento = (series.iloc[-1] / series.iloc[0] - 1) * 100
+            row[activo] = f"{rendimiento:+.1f}%"
+    rows.append(row)
+
+df_tabla = pd.DataFrame(rows).set_index("Period")
+st.dataframe(df_tabla)
