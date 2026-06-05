@@ -65,7 +65,12 @@ df_tabla = pd.DataFrame(rows).set_index("Period")
 ancho_columna = 120
 ancho_total = ancho_columna * (len(activos_seleccionados) + 1)  # +1 por S&P 500
 
+def resaltar_fila(row):
+    if row.name == PERIOD_LABELS[periodo]:
+        return ["background-color: #f0f0f0; font-weight: bold"] * len(row)
+    return [""] * len(row)
+
 st.dataframe(
-    df_tabla.style.map(color_rendimiento),
+    df_tabla.style.map(color_rendimiento).apply(resaltar_fila, axis=1),
     width=ancho_total
 )
