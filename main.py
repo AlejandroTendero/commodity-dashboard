@@ -37,6 +37,14 @@ fig = normalized_chart(data_filtrada, period_label=PERIOD_LABELS[periodo])
 
 st.plotly_chart(fig, width='stretch', height=550)
 
+def color_rendimiento(val):
+    try:
+        num = float(val.replace("%", "").replace("+", ""))
+        color = "green" if num > 0 else "red" if num < 0 else "black"
+        return f"color: {color}"
+    except:
+        return ""
+
 st.subheader("Performance by period")
 
 # Construir la tabla
@@ -53,4 +61,7 @@ for p in VALID_PERIODS:
     rows.append(row)
 
 df_tabla = pd.DataFrame(rows).set_index("Period")
-st.dataframe(df_tabla)
+st.dataframe(
+    df_tabla.style.map(color_rendimiento),
+    use_container_width=True
+)
