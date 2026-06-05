@@ -3,6 +3,14 @@ import pandas as pd
 from data.fetcher import fetch_data, VALID_PERIODS
 from charts.normalized import normalized_chart, PERIOD_LABELS
 
+st.set_page_config(layout="wide")
+
+st.markdown("""
+    <style>
+    .block-container { padding-top: 1rem; }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("Commodity dashboard")
 
 data = fetch_data("5y")  # para poblar el multiselect
