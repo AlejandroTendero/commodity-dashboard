@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from data.fetcher import fetch_data, VALID_PERIODS
 from charts.normalized import normalized_chart, PERIOD_LABELS
+from charts.heatmap import correlation_heatmap
 
 st.set_page_config(layout="wide")
 
@@ -45,36 +46,30 @@ def color_rendimiento(val):
     except:
         return ""
 
-col1, col2 = st.columns([2, 1])
+st.subheader("Performance by period")
+rows = []
+for p in VALID_PERIODS:
+    data_p = fetch_data(p)
+    row = {"Period": PERIOD_LABELS[p]}
+    activos_tabla = activos_seleccionados + ["S&P 500"]
+    for activo in activos_tabla:
+        if activo in data_p:
+            series = data_p[activo]
+            rendimiento = (series.iloc[-1] / series.iloc[0] - 1) * 100
+            row[activo] = f"{rendimiento:+.1f}%"
+    rows.append(row)
+df_tabla = pd.DataFrame(rows).set_index("Period")
+ancho_columna = 120
+ancho_total = ancho_columna * (len(activos_seleccionados) + 1)
+def resaltar_fila(row):
+    if row.name == PERIOD_LABELS[periodo]:
+        return ["background-color: #f0f0f0; font-weight: bold"] * len(row)
+    return [""] * len(row)
+st.dataframe(
+    df_tabla.style.map(color_rendimiento).apply(resaltar_fila, axis=1),
+    width=ancho_total
+)
 
-with col1:
-    st.subheader("Performance by period")
-    # Construir la tabla
-    rows = []
-    for p in VALID_PERIODS:
-        data_p = fetch_data(p)
-        row = {"Period": PERIOD_LABELS[p]}
-        activos_tabla = activos_seleccionados + ["S&P 500"]
-        for activo in activos_tabla:
-            if activo in data_p:
-                series = data_p[activo]
-                rendimiento = (series.iloc[-1] / series.iloc[0] - 1) * 100
-                row[activo] = f"{rendimiento:+.1f}%"
-        rows.append(row)
-    df_tabla = pd.DataFrame(rows).set_index("Period")
-    ancho_columna = 120
-    ancho_total = ancho_columna * (len(activos_seleccionados) + 1)
-    def resaltar_fila(row):
-        if row.name == PERIOD_LABELS[periodo]:
-            return ["background-color: #f0f0f0; font-weight: bold"] * len(row)
-        return [""] * len(row)
-    st.dataframe(
-        df_tabla.style.map(color_rendimiento).apply(resaltar_fila, axis=1),
-        width=ancho_total
-    )
-
-with col2:
-    st.subheader("Correlation matrix")
-    from charts.heatmap import correlation_heatmap
-    fig_heatmap = correlation_heatmap(data_filtrada)
-    st.plotly_chart(fig_heatmap, width="stretch")
+st.subheader("Correlation matrix")
+fig_heatmap = correlation_heatmap(data_filtrada)
+st.plotly_chart(fig_heatmap, width="content")
